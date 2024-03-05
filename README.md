@@ -1,3 +1,3 @@
-# Voice Assistan
+# Voice Assistant
 
-You have to download language model for voice assistant from this site: https://alphacephei.com/vosk/models
+You have to download the language model for the voice assistant from this website: https://alphacephei.com/vosk/models

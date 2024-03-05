@@ -2,7 +2,6 @@ import sounddevice as sd
 from vosk import Model, KaldiRecognizer, SetLogLevel
 import numpy as np
 import json
-import subprocess
 
 SetLogLevel(-1)
 
