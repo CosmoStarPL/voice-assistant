@@ -39,13 +39,17 @@ def main_offline():
 
 
 def check_internet():
-    global content
     try:
-        response = requests.get(url)
-        content = json.loads(response.content)
+        update_content()
         return True
     except requests.RequestException:
         return False
+
+
+def update_content():
+    global content
+    response = requests.get(url)
+    content = json.loads(response.content)
 
 
 while True:
@@ -60,3 +64,5 @@ while True:
         main_online()
     elif default_phrase in result:
         main_offline()
+
+    update_content()
