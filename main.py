@@ -5,9 +5,9 @@ import numpy as np
 
 import json
 
-import utility_text
-import utility_audio
-import utility_video
+import utilities.text
+import utilities.audio
+import utilities.video
 
 SetLogLevel(-1)
 
@@ -19,7 +19,6 @@ model = Model("model_small")
 recognizer = KaldiRecognizer(model, fs)
 
 default_phrase = "здравствуйте"
-default_reply = "ну здравствуй"
 
 url = "https://webulu.uz/voice/source.json"
 content = {}
@@ -27,29 +26,25 @@ content = {}
 
 def main_online():
     if content["prefer"] == 0:
-        utility_text.say(content["sources"]["text"])
+        utilities.text.say(content["sources"]["text"])
     elif content["prefer"] == 1:
-        utility_audio.play(content["sources"]["audio"])
+        utilities.audio.play(content["sources"]["audio"])
     elif content["prefer"] == 2:
-        utility_video.play(content["sources"]["video"])
+        utilities.video.play(content["sources"]["video"])
 
 
 def main_offline():
-    utility_text.say(default_reply, False)
+    utilities.audio.play("assets/audio/default_audio.mp3", False)
 
 
 def check_internet():
     try:
-        update_content()
+        global content
+        response = requests.get(url)
+        content = json.loads(response.content)
         return True
     except requests.RequestException:
         return False
-
-
-def update_content():
-    global content
-    response = requests.get(url)
-    content = json.loads(response.content)
 
 
 while True:
@@ -64,5 +59,3 @@ while True:
         main_online()
     elif default_phrase in result:
         main_offline()
-
-    update_content()
