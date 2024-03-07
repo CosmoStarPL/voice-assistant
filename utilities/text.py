@@ -1,19 +1,13 @@
 from gtts import gTTS
-import sounddevice as sd
-import soundfile as sf
+
+import utilities.audio
 
 
-def say(text, is_online=True):
-    file_path = "../sounds/sound.mp3"
+def say(text):
+    file_path = "assets/audio/generated_audio.mp3"
     language = 'ru'
 
-    if is_online:
-        tts = gTTS(text=text, lang=language, slow=False)
-        tts.save(file_path)
-    else:
-        data, sample_rate = sf.read("../sounds/default_sound.mp3")
-        sd.play(data, sample_rate)
+    tts = gTTS(text=text, lang=language)
+    tts.save(file_path)
 
-    data, sample_rate = sf.read(file_path)
-    sd.play(data, sample_rate)
-    sd.wait()
+    utilities.audio.play(file_path, False)
