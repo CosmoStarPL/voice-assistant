@@ -55,13 +55,9 @@ while True:
     recognizer.AcceptWaveform(recording_np.tobytes())
     result = recognizer.FinalResult()
 
-    if "закрой браузер" in result:
-        if content != {} and content["prefer"] == 2:
-            utilities.video.quit()
-        else:
-            utilities.text.say("Нет запущенных окон браузера")
-
     if check_internet() and content["powered"] and content["phrase"] in result:
         main_online()
     elif default_phrase in result:
         main_offline()
+    elif "закрой браузер" in result:
+        utilities.video.close()

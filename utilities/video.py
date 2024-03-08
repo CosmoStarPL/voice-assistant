@@ -1,14 +1,11 @@
-from selenium import webdriver
+import os
 
-driver = None
+browser = "msedge.exe"
+
 
 def play(video_url):
-    global driver
-    url = video_url
-    driver = webdriver.Edge()
-    driver.get(url)
+    os.system(f"start {browser} --new-window {video_url}")
 
-def quit():
-    global driver
-    if driver is not None:
-        driver.quit()
+
+def close():
+    os.system(f"taskkill /im {browser} /f > nul")
