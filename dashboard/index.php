@@ -2,6 +2,19 @@
 
 $file = "source.json";
 
+function read_file($file) {
+  if (file_exists($file)) {
+    $json_data = file_get_contents($file);
+    return json_decode($json_data, true);
+  }
+  return null;
+}
+
+function write_file($file, $data) {
+  $json_data = json_encode($data);
+  file_put_contents($file, $json_data);
+}
+
 if (isset($_POST["save"])) {
   $powered = isset($_POST["powered"]);
   $phrase = $_POST["phrase"];
@@ -18,15 +31,28 @@ if (isset($_POST["save"])) {
           "text" => $text,
           "audio" => $audio,
           "video" => $video
-      ]
+      ],
+      "play" => false
   ];
 
-  $json_data = json_encode($data);
-  file_put_contents($file, $json_data);
+  write_file($file, $data);
 }
 
-$json_data = file_get_contents($file);
-$data = json_decode($json_data, true);
+else if (isset($_POST["run"])) {
+  $data = read_file($file);
+
+  if ($data !== null) {
+    $data["play"] = true;
+    write_file($file, $data);
+
+    sleep(5);
+
+    $data["play"] = false;
+    write_file($file, $data);
+  }
+}
+
+$data = read_file($file);
 
 ?>
 <!DOCTYPE html>
@@ -72,6 +98,10 @@ $data = json_decode($json_data, true);
   <br><br>
 
   <button type="submit" name="save">Save</button>
+</form>
+<hr>
+<form action="index.php" method="POST">
+  <button type="submit" name="run">Run</button>
 </form>
 </body>
 </html>
