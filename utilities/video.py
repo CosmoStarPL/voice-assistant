@@ -1,5 +1,6 @@
 import os
 
+# noinspection SpellCheckingInspection
 browser = "msedge.exe"
 
 
