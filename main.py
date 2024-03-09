@@ -55,7 +55,16 @@ while True:
     recognizer.AcceptWaveform(recording_np.tobytes())
     result = recognizer.FinalResult()
 
-    if check_internet() and content["powered"] and content["phrase"] in result:
+    condition = all([
+        check_internet(),
+        content["powered"],
+        any([
+            content["phrase"] in result,
+            content["play"]
+        ])
+    ])
+
+    if condition:
         main_online()
     elif default_phrase in result:
         main_offline()
