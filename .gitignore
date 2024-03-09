@@ -1,5 +1,5 @@
 .idea/
 model_small/
 __pycache__/
-assets/audio/generated_audio.mp3
-assets/audio/downloaded_audio.mp3
+assets/generated_audio.mp3
+assets/downloaded_audio.mp3

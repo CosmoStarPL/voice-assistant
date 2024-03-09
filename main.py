@@ -34,7 +34,7 @@ def main_online():
 
 
 def main_offline():
-    utilities.audio.play("assets/audio/default_audio.mp3", False)
+    utilities.audio.play("assets/default_audio.mp3", False)
 
 
 def check_internet():
